@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new WeatherPointsAdapter(this, weatherPoints);
         rvWeatherPoints.setAdapter(adapter);
         rvWeatherPoints.setLayoutManager(new LinearLayoutManager(this));
+
         getCurrentWeatherData();
         getFiveDayForecastData();
     }
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateForecastWeather(JSONArray jsonArray){
-        addAll(WeatherPoint.fromJSONArray(jsonArray));
+        addAll(WeatherPoint.forecastFromJSONArray(jsonArray));
     }
 
     private class CurrentWeatherTask extends AsyncTask<String, Void, String> {
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getFiveDayForecastData() {
         final String API_KEY = getResources().getString(R.string.open_weather_api_key);
-        new ForecastWeatherTask().execute(BASE_URL + "forecast/daily?q=Atlanta,ga&units=imperial&cnt=5&appId=" + API_KEY);
+        new ForecastWeatherTask().execute(BASE_URL + "forecast/daily?q=Atlanta,ga&units=imperial&cnt=6&appId=" + API_KEY);
     }
 
     public void addAll(ArrayList<WeatherPoint> newWeatherPoints) {

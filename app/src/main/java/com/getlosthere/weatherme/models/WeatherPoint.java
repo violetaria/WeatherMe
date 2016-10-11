@@ -1,5 +1,7 @@
 package com.getlosthere.weatherme.models;
 
+import android.text.TextUtils;
+
 import com.getlosthere.weatherme.R;
 import com.getlosthere.weatherme.helpers.DateFormatHelper;
 
@@ -174,14 +176,15 @@ public class WeatherPoint {
         return weatherPoint;
     }
 
-    public static ArrayList<WeatherPoint> fromJSONArray(JSONArray jsonArray) {
+    public static ArrayList<WeatherPoint> forecastFromJSONArray(JSONArray jsonArray) {
         ArrayList<WeatherPoint> weatherPoints = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++){
             try {
                 JSONObject weatherPointJSONObject = jsonArray.getJSONObject(i);
                 WeatherPoint weatherPoint = WeatherPoint.forecastFromJSONObject(weatherPointJSONObject);
-                if (weatherPoint != null) {
-                    weatherPoints.add(i,weatherPoint);
+                // don't add today's date which is returned back in the forecasted data
+                if (weatherPoint != null && !TextUtils.equals(weatherPoint.getDateWeekday(),"Today")) {
+                    weatherPoints.add(weatherPoint);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

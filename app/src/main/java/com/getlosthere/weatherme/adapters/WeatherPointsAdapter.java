@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.getlosthere.weatherme.R;
 import com.getlosthere.weatherme.models.WeatherPoint;
@@ -18,30 +19,44 @@ import java.util.List;
  */
 
 public class WeatherPointsAdapter extends RecyclerView.Adapter<WeatherPointsAdapter.ViewHolder>{
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    private List<WeatherPoint> weatherPoints;
+    private Context context;
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public ImageView ivWeatherImage;
         public TextView tvDate;
         public TextView tvWeatherText;
         public TextView tvMaxTemp;
         public TextView tvMinTemp;
+        private Context context;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(Context context, View itemView) {
             super(itemView);
             ivWeatherImage = (ImageView) itemView.findViewById(R.id.ivWeatherImage);
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
             tvWeatherText = (TextView) itemView.findViewById(R.id.tvWeatherText);
             tvMaxTemp = (TextView) itemView.findViewById(R.id.tvMaxTemp);
             tvMinTemp = (TextView) itemView.findViewById(R.id.tvMinTemp);
+            this.context = context;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                WeatherPoint weatherPoint = weatherPoints.get(position);
+               Toast.makeText(context, weatherPoint.getText(), Toast.LENGTH_SHORT).show();
+
+            }
         }
     }
-
-    private List<WeatherPoint> weatherPoints;
-    private Context context;
 
     public WeatherPointsAdapter(Context context, List<WeatherPoint> weatherPoints){
         this.context = context;
         this.weatherPoints = weatherPoints;
     }
+
 
     private Context getContext(){
         return context;
@@ -52,9 +67,9 @@ public class WeatherPointsAdapter extends RecyclerView.Adapter<WeatherPointsAdap
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View contactView = inflater.inflate(R.layout.weather_point, parent, false);
+        View weatherView = inflater.inflate(R.layout.weather_point, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(contactView);
+        ViewHolder viewHolder = new ViewHolder(context, weatherView);
         return viewHolder;
     }
 
