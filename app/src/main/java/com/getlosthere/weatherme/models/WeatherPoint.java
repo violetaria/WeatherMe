@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -16,12 +17,34 @@ import java.util.ArrayList;
  * Created by violetaria on 10/11/16.
  */
 
-public class WeatherPoint {
-    private String minTemp;
-    private String maxTemp;
+public class WeatherPoint implements Serializable {
+    private double minTemp;
+    private double maxTemp;
     private String icon;
     private String text;
+    private double humidity;
+    private double wind;
+    private double pressure;
+    private double degree;
     private long date;
+
+    public String getHumidity() {
+        return Long.toString(Math.round(humidity)) + "°";
+    }
+
+    public String getPressure() {
+        return Long.toString(Math.round(pressure));
+    }
+
+    public String getWind() {
+        return Long.toString(Math.round(wind));
+    }
+
+    public String getDirection() {
+        int angle = (int) ((degree/22.5)+.5);
+        String[] degree_array = new String[]{"N","NNE","NE","ENE","E","ESE", "SE", "SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"};
+        return degree_array[(angle % 16)];
+    }
 
     public long getDate() {
         return date;
@@ -52,28 +75,37 @@ public class WeatherPoint {
     public int getIconArtResource() {
        int imageResource;
         switch(icon) {
+            case "01n":
             case "01d":
                 imageResource = R.drawable.art_clear;
                 break;
+            case "02n":
+            case "03n":
             case "02d":
             case "03d":
                 imageResource = R.drawable.art_light_clouds;
                 break;
+            case "04n":
             case "04d":
                 imageResource = R.drawable.art_clouds;
                 break;
+            case "09n":
             case "09d":
                 imageResource =  R.drawable.art_light_rain;
                 break;
+            case "10n":
             case "10d":
                 imageResource = R.drawable.art_rain;
                 break;
+            case "11n":
             case "11d":
                 imageResource = R.drawable.art_storm;
                 break;
+            case "13n":
             case "13d":
                 imageResource = R.drawable.art_snow;
                 break;
+            case "50n":
             case "50d":
                 imageResource = R.drawable.art_fog;
                 break;
@@ -121,11 +153,11 @@ public class WeatherPoint {
 
 
     public String getMaxTemp() {
-        return maxTemp;
+        return Long.toString(Math.round(maxTemp)) + "°";
     }
 
     public String getMinTemp() {
-        return minTemp;
+        return Long.toString(Math.round(minTemp)) + "°";
     }
 
     public String getText() {
@@ -136,14 +168,6 @@ public class WeatherPoint {
 
     }
 
-    public WeatherPoint(String text, String minTemp, String maxTemp, String icon, long date){
-        this.text = text;
-        this.minTemp = minTemp;
-        this.maxTemp = maxTemp;
-        this.icon = icon;
-        this.date = date;
-    }
-
     public static WeatherPoint currentFromJSONObject(JSONObject jsonObject){
         WeatherPoint weatherPoint = new WeatherPoint();
         try {
@@ -151,8 +175,13 @@ public class WeatherPoint {
             weatherPoint.icon = weatherObject.getString("icon");
             weatherPoint.text = weatherObject.getString("main");
             JSONObject mainObject = jsonObject.getJSONObject("main");
-            weatherPoint.maxTemp = mainObject.getString("temp_max");
-            weatherPoint.minTemp = mainObject.getString("temp_min");
+            weatherPoint.maxTemp = mainObject.getDouble("temp_max");
+            weatherPoint.minTemp = mainObject.getDouble("temp_min");
+            weatherPoint.humidity = mainObject.getDouble("humidity");
+            weatherPoint.pressure = mainObject.getDouble("pressure");
+            JSONObject windObject = jsonObject.getJSONObject("wind");
+            weatherPoint.wind = windObject.getDouble("speed");
+            weatherPoint.degree = windObject.getDouble("deg");
             weatherPoint.date = jsonObject.getLong("dt");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -167,8 +196,12 @@ public class WeatherPoint {
             weatherPoint.icon = weatherObject.getString("icon");
             weatherPoint.text = weatherObject.getString("main");
             JSONObject tempObject = jsonObject.getJSONObject("temp");
-            weatherPoint.maxTemp = tempObject.getString("max");
-            weatherPoint.minTemp = tempObject.getString("min");
+            weatherPoint.maxTemp = tempObject.getDouble("max");
+            weatherPoint.minTemp = tempObject.getDouble("min");
+            weatherPoint.humidity = jsonObject.getDouble("humidity");
+            weatherPoint.pressure = jsonObject.getDouble("pressure");
+            weatherPoint.wind = jsonObject.getDouble("speed");
+            weatherPoint.degree = jsonObject.getDouble("deg");
             weatherPoint.date = jsonObject.getLong("dt");
         } catch (JSONException e) {
             e.printStackTrace();

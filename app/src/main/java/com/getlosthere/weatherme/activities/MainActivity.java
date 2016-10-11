@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
         tvCurrentDate = (TextView) findViewById(R.id.tvCurrentDate);
         WeatherPoint currentWeather = WeatherPoint.currentFromJSONObject(jsonObject);
         tvCurrentText.setText(currentWeather.getText());
-        tvCurrentHighTemp.setText(currentWeather.getMaxTemp()+"°");
-        tvCurrentLowTemp.setText(currentWeather.getMinTemp()+"°");
+        tvCurrentHighTemp.setText(currentWeather.getMaxTemp());
+        tvCurrentLowTemp.setText(currentWeather.getMinTemp());
         tvCurrentDate.setText(currentWeather.getDateWeekday() + ", " + currentWeather.getDateMonthDay());
         ivCurrentImage.setImageDrawable(getDrawable(currentWeather.getIconArtResource()));
     }

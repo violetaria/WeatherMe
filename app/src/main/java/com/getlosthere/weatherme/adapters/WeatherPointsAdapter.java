@@ -1,15 +1,16 @@
 package com.getlosthere.weatherme.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.getlosthere.weatherme.R;
+import com.getlosthere.weatherme.activities.WeatherDetailActivity;
 import com.getlosthere.weatherme.models.WeatherPoint;
 
 import java.util.List;
@@ -46,8 +47,9 @@ public class WeatherPointsAdapter extends RecyclerView.Adapter<WeatherPointsAdap
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 WeatherPoint weatherPoint = weatherPoints.get(position);
-               Toast.makeText(context, weatherPoint.getText(), Toast.LENGTH_SHORT).show();
-
+                Intent i = new Intent(context,WeatherDetailActivity.class);
+                i.putExtra("weather_point",weatherPoint);
+                context.startActivity(i);
             }
         }
     }
@@ -87,10 +89,10 @@ public class WeatherPointsAdapter extends RecyclerView.Adapter<WeatherPointsAdap
         tvWeatherText.setText(weatherPoint.getText());
 
         TextView tvMaxTemp = viewHolder.tvMaxTemp;
-        tvMaxTemp.setText(weatherPoint.getMaxTemp() + "°");
+        tvMaxTemp.setText(weatherPoint.getMaxTemp());
 
         TextView tvMinTemp = viewHolder.tvMinTemp;
-        tvMinTemp.setText(weatherPoint.getMinTemp() + "°");
+        tvMinTemp.setText(weatherPoint.getMinTemp());
     }
 
     @Override
