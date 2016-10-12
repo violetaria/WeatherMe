@@ -33,11 +33,11 @@ public class WeatherPoint implements Serializable {
     }
 
     public String getPressure() {
-        return Long.toString(Math.round(pressure)) + "hPa";
+        return Long.toString(Math.round(pressure)) + " hPa";
     }
 
     public String getWind() {
-        return Long.toString(Math.round(wind)) + "km/h";
+        return Long.toString(Math.round(wind)) + " km/h";
     }
 
     public String getDirection() {
