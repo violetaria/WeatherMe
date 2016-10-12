@@ -1,4 +1,4 @@
-package com.pensum.pensumapplication.helpers;
+package com.getlosthere.weatherme.helpers;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

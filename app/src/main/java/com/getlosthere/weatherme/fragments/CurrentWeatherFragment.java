@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.getlosthere.weatherme.R;
 import com.getlosthere.weatherme.adapters.WeatherPointsAdapter;
+import com.getlosthere.weatherme.helpers.NetworkHelper;
 import com.getlosthere.weatherme.models.WeatherPoint;
 
 import org.json.JSONException;
@@ -72,7 +74,11 @@ public class CurrentWeatherFragment extends Fragment {
 
     private void getCurrentWeatherData() {
         final String API_KEY = getResources().getString(R.string.open_weather_api_key);
-        new CurrentWeatherTask().execute(BASE_URL + "weather?q=Atlanta,GA&units=imperial&appId=" + API_KEY);
+        if (NetworkHelper.isOnline() && NetworkHelper.isNetworkAvailable(getActivity())) {
+            new CurrentWeatherTask().execute(BASE_URL + "weather?q=Atlanta,GA&units=imperial&appId=" + API_KEY);
+        } else {
+            Toast.makeText(getActivity(), "You're offline :( Check your network connection",Toast.LENGTH_LONG).show();
+        }
     }
 
     private class CurrentWeatherTask extends AsyncTask<String, Void, String> {

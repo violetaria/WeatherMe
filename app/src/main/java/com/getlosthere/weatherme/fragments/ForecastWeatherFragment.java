@@ -8,9 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.getlosthere.weatherme.R;
 import com.getlosthere.weatherme.adapters.WeatherPointsAdapter;
+import com.getlosthere.weatherme.helpers.NetworkHelper;
 import com.getlosthere.weatherme.models.WeatherPoint;
 
 import org.json.JSONArray;
@@ -95,7 +97,12 @@ public class ForecastWeatherFragment extends Fragment {
 
     private void getFiveDayForecastData() {
         final String API_KEY = getResources().getString(R.string.open_weather_api_key);
-        new ForecastWeatherTask().execute(BASE_URL + "forecast/daily?q=Atlanta,ga&units=imperial&cnt=6&appId=" + API_KEY);
+        if (NetworkHelper.isOnline() && NetworkHelper.isNetworkAvailable(getActivity())) {
+            new ForecastWeatherTask().execute(BASE_URL + "forecast/daily?q=Atlanta,ga&units=imperial&cnt=6&appId=" + API_KEY);
+        }
+        else {
+            Toast.makeText(getActivity(), "You're offline :( Check your network connection",Toast.LENGTH_LONG).show();
+        }
     }
 
     public void addAll(ArrayList<WeatherPoint> newWeatherPoints) {
