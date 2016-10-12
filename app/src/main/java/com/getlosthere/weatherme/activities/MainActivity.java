@@ -34,6 +34,6 @@ public class MainActivity extends AppCompatActivity {
             ft.replace(R.id.flCurrentWeather, new CurrentWeatherFragment());
             ft.replace(R.id.flForecastWeather, new ForecastWeatherFragment());
             ft.commit();
-        } 
+        }
     }
 }

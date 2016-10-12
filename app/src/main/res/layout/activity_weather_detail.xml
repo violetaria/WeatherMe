@@ -103,12 +103,6 @@
         android:layout_below="@+id/tvHumidityLabel"
         android:layout_alignLeft="@+id/tvHumidityLabel"
         android:layout_alignStart="@+id/tvHumidityLabel"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" app:srcCompat="@drawable/art_clear"
-        android:id="@+id/ivWeatherImage"
-        android:layout_alignTop="@+id/tvMaxTemp" android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" android:layout_marginRight="35dp"/>
     <TextView
         tools:text="21"
         android:layout_width="wrap_content"
@@ -118,4 +112,11 @@
         android:textColor="@color/textColorPrimaryDark"
         android:layout_below="@+id/tvDate"
         android:layout_marginLeft="45dp"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" app:srcCompat="@drawable/art_clear"
+        android:id="@+id/ivWeatherImage"
+        android:layout_marginRight="35dp" android:layout_alignTop="@+id/tvMaxTemp"
+        android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+        android:layout_marginEnd="35dp" android:scaleType="fitCenter"/>
 </RelativeLayout>

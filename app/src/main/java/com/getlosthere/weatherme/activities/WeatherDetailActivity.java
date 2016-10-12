@@ -41,14 +41,16 @@ public class WeatherDetailActivity extends AppCompatActivity {
     }
 
     private void populateWeatherData(){
-        tvWeekday.setText(weatherPoint.getDateWeekday());
-        tvDate.setText(weatherPoint.getDateMonthDay());
-        tvMaxTemp.setText(weatherPoint.getMaxTemp());
-        tvMinTemp.setText(weatherPoint.getMinTemp());
-        tvHumidity.setText(weatherPoint.getHumidity());
-        tvWind.setText(weatherPoint.getWind() + " " + weatherPoint.getDirection());
-        tvPressure.setText(weatherPoint.getPressure());
-        tvWeatherText.setText(weatherPoint.getText());
-        ivWeatherImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(),weatherPoint.getIconArtResource(),null));
+        if (weatherPoint != null) {
+            tvWeekday.setText(weatherPoint.getDateWeekday());
+            tvDate.setText(weatherPoint.getDateMonthDay());
+            tvMaxTemp.setText(weatherPoint.getMaxTemp());
+            tvMinTemp.setText(weatherPoint.getMinTemp());
+            tvHumidity.setText(weatherPoint.getHumidity());
+            tvWind.setText(weatherPoint.getWind() + " " + weatherPoint.getDirection());
+            tvPressure.setText(weatherPoint.getPressure());
+            tvWeatherText.setText(weatherPoint.getText());
+            ivWeatherImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(), weatherPoint.getIconArtResource(), null));
+        }
     }
 }
