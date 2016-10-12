@@ -1,6 +1,7 @@
 package com.getlosthere.weatherme.activities;
 
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,7 +46,7 @@ public class WeatherDetailActivity extends AppCompatActivity {
         tvHumidity.setText(weatherPoint.getHumidity());
         tvWind.setText(weatherPoint.getWind() + " " + weatherPoint.getDirection());
         tvPressure.setText(weatherPoint.getPressure());
-        ivWeatherImage.setImageDrawable(getDrawable(weatherPoint.getIconArtResource()));
 
+        ivWeatherImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(),weatherPoint.getIconArtResource(),null));
     }
 }

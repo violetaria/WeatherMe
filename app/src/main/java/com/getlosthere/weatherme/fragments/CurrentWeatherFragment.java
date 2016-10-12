@@ -4,6 +4,7 @@ package com.getlosthere.weatherme.fragments;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +70,7 @@ public class CurrentWeatherFragment extends Fragment {
         tvCurrentHighTemp.setText(currentWeather.getMaxTemp());
         tvCurrentLowTemp.setText(currentWeather.getMinTemp());
         tvCurrentDate.setText(currentWeather.getDateWeekday() + ", " + currentWeather.getDateMonthDay());
-        ivCurrentImage.setImageDrawable(getActivity().getResources().getDrawable(currentWeather.getIconArtResource()));
+        ivCurrentImage.setImageDrawable(ResourcesCompat.getDrawable(getContext().getResources(),currentWeather.getIconArtResource(),null));
     }
 
     private void getCurrentWeatherData() {
