@@ -1,6 +1,7 @@
 package com.getlosthere.weatherme.fragments;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getlosthere.weatherme.R;
+import com.getlosthere.weatherme.activities.WeatherDetailActivity;
 import com.getlosthere.weatherme.adapters.WeatherPointsAdapter;
 import com.getlosthere.weatherme.helpers.NetworkHelper;
 import com.getlosthere.weatherme.models.WeatherPoint;
@@ -39,6 +42,8 @@ public class CurrentWeatherFragment extends Fragment {
     private TextView tvCurrentDate;
     private ArrayList<WeatherPoint> weatherPoints;
     private WeatherPointsAdapter adapter;
+    private WeatherPoint currentWeather;
+    private RelativeLayout rlCurrentWeather;
     private View view;
     private final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
 
@@ -56,6 +61,15 @@ public class CurrentWeatherFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         this.view = view;
+        rlCurrentWeather = (RelativeLayout) view.findViewById(R.id.rlCurrentWeather);
+        rlCurrentWeather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), WeatherDetailActivity.class);
+                i.putExtra("weather_point",currentWeather);
+                startActivity(i);
+            }
+        });
         getCurrentWeatherData();
     }
 
@@ -65,12 +79,12 @@ public class CurrentWeatherFragment extends Fragment {
         tvCurrentLowTemp = (TextView) view.findViewById(R.id.tvCurrentLowTemp);
         tvCurrentText = (TextView) view.findViewById(R.id.tvCurrentText);
         tvCurrentDate = (TextView) view.findViewById(R.id.tvCurrentDate);
-        WeatherPoint currentWeather = WeatherPoint.currentFromJSONObject(jsonObject);
+        currentWeather = WeatherPoint.currentFromJSONObject(jsonObject);
         tvCurrentText.setText(currentWeather.getText());
         tvCurrentHighTemp.setText(currentWeather.getMaxTemp());
         tvCurrentLowTemp.setText(currentWeather.getMinTemp());
         tvCurrentDate.setText(currentWeather.getDateWeekday() + ", " + currentWeather.getDateMonthDay());
-        ivCurrentImage.setImageDrawable(ResourcesCompat.getDrawable(getContext().getResources(),currentWeather.getIconArtResource(),null));
+        ivCurrentImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(),currentWeather.getIconArtResource(),null));
     }
 
     private void getCurrentWeatherData() {
@@ -86,7 +100,7 @@ public class CurrentWeatherFragment extends Fragment {
 
         protected String doInBackground(String... addresses) {
             StringBuilder stringBuilder = new StringBuilder();
-            InputStream inputStream = null;
+            InputStream inputStream;
             try {
                 URL url = new URL(addresses[0]);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();

@@ -25,15 +25,15 @@ public class MainActivity extends AppCompatActivity {
     private WeatherPointsAdapter adapter;
     private RecyclerView rvWeatherPoints;
 
-    private final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.flCurrentWeather, new CurrentWeatherFragment());
-        ft.replace(R.id.flForecastWeather, new ForecastWeatherFragment());
-        ft.commit();
+        if (savedInstanceState == null){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.flCurrentWeather, new CurrentWeatherFragment());
+            ft.replace(R.id.flForecastWeather, new ForecastWeatherFragment());
+            ft.commit();
+        } 
     }
 }
