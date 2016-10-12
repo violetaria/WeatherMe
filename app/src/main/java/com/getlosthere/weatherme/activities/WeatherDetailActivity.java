@@ -18,6 +18,7 @@ public class WeatherDetailActivity extends AppCompatActivity {
     private TextView tvHumidity;
     private TextView tvWind;
     private TextView tvPressure;
+    private TextView tvWeatherText;
     private ImageView ivWeatherImage;
 
     @Override
@@ -33,6 +34,7 @@ public class WeatherDetailActivity extends AppCompatActivity {
         tvHumidity = (TextView) findViewById(R.id.tvHumidity);
         tvWind = (TextView) findViewById(R.id.tvWind);
         tvPressure = (TextView) findViewById(R.id.tvPressure);
+        tvWeatherText = (TextView) findViewById(R.id.tvWeatherText);
         ivWeatherImage = (ImageView) findViewById(R.id.ivWeatherImage);
 
         populateWeatherData();
@@ -46,7 +48,7 @@ public class WeatherDetailActivity extends AppCompatActivity {
         tvHumidity.setText(weatherPoint.getHumidity());
         tvWind.setText(weatherPoint.getWind() + " " + weatherPoint.getDirection());
         tvPressure.setText(weatherPoint.getPressure());
-
+        tvWeatherText.setText(weatherPoint.getText());
         ivWeatherImage.setImageDrawable(ResourcesCompat.getDrawable(getResources(),weatherPoint.getIconArtResource(),null));
     }
 }

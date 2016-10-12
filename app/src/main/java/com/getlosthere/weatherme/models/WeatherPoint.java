@@ -29,15 +29,15 @@ public class WeatherPoint implements Serializable {
     private long date;
 
     public String getHumidity() {
-        return Long.toString(Math.round(humidity)) + "°";
+        return Long.toString(Math.round(humidity)) + "%";
     }
 
     public String getPressure() {
-        return Long.toString(Math.round(pressure));
+        return Long.toString(Math.round(pressure)) + "hPa";
     }
 
     public String getWind() {
-        return Long.toString(Math.round(wind));
+        return Long.toString(Math.round(wind)) + "km/h";
     }
 
     public String getDirection() {

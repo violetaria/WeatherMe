@@ -5,6 +5,7 @@
     <color name="colorHeader">#1BA0F5</color>
     <color name="colorAccent">#FF4081</color>
     <color name="textColorPrimary">#FFFFFF</color>
-    <color name="textColorSecondary">#020202</color>
+    <color name="textColorPrimaryDark">#020202</color>
+    <color name="textColorAccent">#585858</color>
 
 </resources>
